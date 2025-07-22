@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
         next();
     } catch (err) {
         res.status(400).json({
-            errors: err.errors || [err.message || 'Validation failed']
+            errors: err.errors || ['Validation failed']
         });
     }
 };

@@ -11,11 +11,6 @@ const user = {
     password: bcrypt.hashSync('123456',10),
 };
 
-const loginSchema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-});
-
 exports.login = (req, res) => {
     const { email, password } = req.body;
 

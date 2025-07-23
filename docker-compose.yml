@@ -26,7 +26,7 @@ services:
       - ./api:/app
 
   frontend:
-    build: ./Front/lista_compras
+    build: ./Front
     container_name: frontend-container
     ports:
       - "3001:3000"
@@ -35,7 +35,7 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./Front/lista_compras:/app
+      - ./Front:/app
 
 volumes:
   db_data:

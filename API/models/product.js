@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+
+      bought: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      }, 
     },
     {
       sequelize,

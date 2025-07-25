@@ -17,7 +17,7 @@ export default function DashboardPage() {
     }
 
     axios
-      .get('/products')
+      .get('/api/products/getAll')
       .then((res) => {
         setProducts(res.data)
         setLoading(false)
@@ -27,7 +27,7 @@ export default function DashboardPage() {
         localStorage.removeItem('token')
         router.push('/login')
       })
-  }, [])
+  })
 
   const handleLogout = () => {
     localStorage.removeItem('token')

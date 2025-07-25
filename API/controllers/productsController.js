@@ -5,6 +5,7 @@ exports.getAllProducts = async (req, res) => {
     const products = await Product.findAll();
     res.json(products);
   } catch (error) {
+    console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Failed to fetch products' });
   }
 };

@@ -1,8 +1,9 @@
 'use client';
 
-import Image from "next/image"
+import ProductModal from "@/components/ui/product-modal";
+import ProductCard from "@/components/ui/product-card";
+import EditProductModal from "@/components/ui/product-edit-modal";
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import axios from '@/lib/axios';
 import { useRouter } from 'next/navigation';
 import { FloatingNav } from "@/components/ui/floating-navbar";
@@ -14,6 +15,9 @@ export default function ProductsPage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState('');
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const router = useRouter();
 
   const fetchProducts = async () => {
@@ -56,9 +60,13 @@ export default function ProductsPage() {
   const toggleBought = async (id) => {
     try {
       await axios.patch(`/api/products/${id}/bought`);
-      fetchProducts();
+      setProducts(prev =>
+        prev.map(p =>
+          p.id === id ? { ...p, bought: !p.bought } : p
+        )
+      );
       if (selectedProduct?.id === id) {
-        fetchProductDetails(id);
+        setSelectedProduct(prev => ({ ...prev, bought: !prev.bought }));
       }
     } catch {
       alert('Erro ao atualizar status de compra.');
@@ -78,6 +86,23 @@ export default function ProductsPage() {
     setSelectedProduct(null);
     setModalError('');
   };
+
+  const handleEditClick = (product) => {
+    setEditingProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateProduct = async (id, data) => {
+    try {
+      await axios.put(`/api/products/${id}`, data);
+      await fetchProducts();
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error("Erro ao editar produto:", error);
+    }
+  };
+  
+
 
   const itensNav = [
     { name: 'Home', link: '/' },
@@ -100,14 +125,12 @@ export default function ProductsPage() {
     <>
       <FloatingNav itensNav={itensNav} />
 
-      {/* Abaixo da nav */}
-      <div className="mt-[100px] max-w-5xl mx-auto px-4 flex justify-between items-center">
-        {/* Botão adicionar item */}
+      <div className="mt-[100px] max-w-5xl mx-auto px-4 pt-5 flex justify-between items-center">
         <button
           onClick={console.log('teste')}
-          className="inline-block bg-[#7F60FF] text-white text-xl px-3 py-2 rounded-full max-w-max font-semibold cursor-pointer"
+          className="inline-block bg-[#7F60FF] text-white text-xl px-4 py-3 rounded-full max-w-max font-semibold cursor-pointer"
         >
-          Adicionar novo item
+          Novo item
         </button>
 
           <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
@@ -118,8 +141,7 @@ export default function ProductsPage() {
           </span>
           </div>
 
-      {/* Conteúdo */}
-      <main className={`pt-24 p-8 max-w-6xl mx-auto transition-all duration-300 ${selectedProduct ? 'filter blur-sm pointer-events-none select-none' : ''}`}>
+      <main className={`pt-10 p-8 max-w-6xl mx-auto transition-all duration-300 ${selectedProduct ? 'filter blur-sm pointer-events-none select-none' : ''}`}>
         {loading ? (
           <div className="text-center py-10 text-gray-500">Carregando...</div>
         ) : error ? (
@@ -129,142 +151,50 @@ export default function ProductsPage() {
         ) : (
           
 
-          //Cartão do produto
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Dentro do map de produtos, substitua o bloco do card por isso: */}
 
-            {products.map(({ id, name, price, category, bought }) => (
-            <div
-              key={id}
-              className="relative bg-white shadow-md rounded-4xl p-6 pt-12 hover:shadow-xl transition-shadow border border-gray-100 flex flex-col"
-            >
-              {/* Botões Editar e Deletar no topo direito */}
-              <div className="absolute top-4 right-4 flex gap-3">
-                <Link
-                  href={`/products/${id}/edit`}
-                  className="text-yellow-600 hover:underline text-sm"
-                >
-                  <Image src="/editButton.svg" alt="Ver" width={18} height={18} />
-                </Link>
-                <button
-                  onClick={() => deleteProduct(id)}
-                  className="text-red-600 hover:underline text-sm cursor-pointer"
-                >
-                  <Image src="/deleteButton.svg" alt="Ver" width={18} height={18} />
-                </button>
-              </div>
-
-              {/* Conteúdo principal */}
-              <h2 className="text-xl font-extrabold text-gray-800 mb-4">{name}</h2>
-              <p className="text-black mb-4 font-medium text-xl">R$ {price}</p>
-              <span className="inline-block bg-[#609AFF] text-white text-sm px-3 py-2 rounded-full max-w-max mb-4 font-semibold">
-                {category}
-              </span>
-              <div className="flex justify-between items-end mt-6">
-              <label className="flex items-center gap-3 text-black font-medium mt-2 text-xl">
-                <input
-                  type="checkbox"
-                  checked={bought}
-                  onChange={() => toggleBought(id)}
-                  className="w-5 h-5 accent-[#7F60FF]"
-                />
-                Comprado
-              </label>
-
-              {/* Botão Ver no canto inferior direito */}
-              <div className="flex justify-end mt-4">
-                <button
-                  onClick={() => openModal(id)}
-                  className="text-blue-600 hover:underline cursor-pointer"
-                >
-                  <Image src="/backButton.svg" alt="Ver" width={20} height={20} />
-                </button>
-              </div>
-            </div>
-            </div>
+            {products.map((product) => (
+              <ProductCard
+                key={product.id} 
+                {...product}
+                deleteProduct={deleteProduct}
+                toggleBought={toggleBought}
+                openModal={openModal}
+                onEdit={() => {
+                  setEditingProduct({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    description: product.description || '',
+                    category: product.category || '',
+                  });
+                  setIsEditModalOpen(true);
+                }}
+              />
             ))}
-
 
           </div>
 
         )}
       </main>
 
-      {/* Modal */}
-      {selectedProduct && (
-        <div
-          className="fixed inset-0 z-60 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
-          onClick={closeModal}
-          aria-modal="true"
-          role="dialog"
-        >
-          <div
-            className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={closeModal}
-              className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
-              aria-label="Fechar"
-            >
-              ×
-            </button>
+      <ProductModal
+        product={selectedProduct}
+        onClose={closeModal}
+        loading={modalLoading}
+        error={modalError}
+        onDelete={deleteProduct}
+        onToggleBought={toggleBought}
+      />
 
-            {modalLoading ? (
-              <p className="text-center text-gray-500">Carregando detalhes...</p>
-            ) : modalError ? (
-              <p className="text-center text-red-600">{modalError}</p>
-            ) : (
-              <>
-                <h2 className="text-2xl font-bold mb-4">{selectedProduct.name}</h2>
-                <p className="mb-2">
-                  <strong>Preço:</strong> R$ {selectedProduct.price}
-                </p>
-                <p className="mb-2">
-                  <strong>Categoria:</strong> {selectedProduct.category}
-                </p>
-                <p className="mb-2">
-                  <strong>Descrição:</strong> {selectedProduct.description || 'Sem descrição'}
-                </p>
+      <EditProductModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        product={editingProduct}
+        onSubmit={handleUpdateProduct}
+      />
 
-                <label className="flex items-center gap-2 text-sm text-gray-700 mt-4">
-                  <input
-                    type="checkbox"
-                    checked={selectedProduct.bought}
-                    onChange={() => toggleBought(selectedProduct.id)}
-                    className="w-5 h-5 accent-green-600"
-                  />
-                  Comprado
-                </label>
 
-                <div className="mt-6 flex justify-end gap-4">
-                  <Link
-                    href={`/products/${selectedProduct.id}/edit`}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-4 py-2 rounded shadow text-sm"
-                  >
-                    Editar
-                  </Link>
-                  <button
-                    onClick={() => {
-                      deleteProduct(selectedProduct.id);
-                      closeModal();
-                    }}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow text-sm"
-                  >
-                    Deletar
-                  </button>
-                  <button
-                    onClick={closeModal}
-                    className="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded shadow text-sm"
-                  >
-                    Fechar
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </>
   );
 }

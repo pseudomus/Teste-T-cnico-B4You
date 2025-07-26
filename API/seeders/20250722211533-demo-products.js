@@ -39,7 +39,7 @@ module.exports = {
       {
         name: 'Bolsa Feminina de Couro',
         price: 450.00,
-        category: 'Beleza e Cuidados Pessoaisv',
+        category: 'Beleza e Cuidados Pessoais',
         description: 'Elegante e espaçosa, perfeita para o dia a dia.',
         createdAt: new Date(),
         updatedAt: new Date(),

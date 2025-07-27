@@ -71,13 +71,11 @@ export default function EditProductModal({ isOpen, onClose, product, onSubmit })
 
           <div className="flex gap-4">
             <div className="flex-1">
-              <label className="block mb-1 font-semibold">Nome</label>
-              <input
-                type="text"
-                name="name"
+              <TextBox
+                label="Name"
+                name="Name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border border-[#7F60FF] rounded-md px-3 py-2"
                 required
               />
             </div>
@@ -112,7 +110,7 @@ export default function EditProductModal({ isOpen, onClose, product, onSubmit })
             </div>
           <div className="flex-1" />
         </div>
-        
+
           <div>
             <TextBox
             label="Descrição"

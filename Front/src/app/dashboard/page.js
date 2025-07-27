@@ -2,6 +2,7 @@
 
 import ProductModal from "@/components/ui/product-modal";
 import ProductCard from "@/components/ui/product-card";
+import CreateProductModal from "@/components/ui/create-product-modal";
 import EditProductModal from "@/components/ui/product-edit-modal";
 import { useEffect, useState } from 'react';
 import axios from '@/lib/axios';
@@ -9,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { FloatingNav } from "@/components/ui/floating-navbar";
 
 export default function ProductsPage() {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -101,8 +103,16 @@ export default function ProductsPage() {
       console.error("Erro ao editar produto:", error);
     }
   };
-  
 
+  const handleCreateProduct = async (data) => {
+    try {
+      await axios.post('/api/products', data);
+      await fetchProducts();
+    } catch (error) {
+      console.error("Erro ao criar produto:", error);
+    }
+  };
+  
 
   const itensNav = [
     { name: 'Home', link: '/' },
@@ -127,7 +137,7 @@ export default function ProductsPage() {
 
       <div className="mt-[100px] max-w-5xl mx-auto px-4 pt-5 flex justify-between items-center">
         <button
-          onClick={console.log('teste')}
+          onClick={() => setIsCreateModalOpen(true)}
           className="inline-block bg-[#7F60FF] text-white text-xl px-4 py-3 rounded-full max-w-max font-semibold cursor-pointer hover:bg-[#6f50e0]"
         >
           Novo item
@@ -194,6 +204,13 @@ export default function ProductsPage() {
         onSubmit={handleUpdateProduct}
       />
 
+      <CreateProductModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSubmit={handleCreateProduct}
+      />
+
+      
 
     </>
   );

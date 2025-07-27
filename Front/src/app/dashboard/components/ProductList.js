@@ -1,6 +1,8 @@
-import ProductCard from "@/components/ui/product-card";
+'use client';
 
-export default function ProductList({ products, onDelete, onToggle, onOpen, onEdit }) {
+import ProductCard from "@/components/ui/productCard";
+
+export default function ProductList({ products, onDelete, onToggle, onEdit }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
@@ -9,7 +11,6 @@ export default function ProductList({ products, onDelete, onToggle, onOpen, onEd
           {...product}
           deleteProduct={onDelete}
           toggleBought={onToggle}
-          openModal={onOpen}
           onEdit={() => onEdit(product)}
         />
       ))}

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   getAllProducts,
-  getProductById,
   createProduct as apiCreateProduct,
   updateProduct as apiUpdateProduct,
   deleteProductById,
@@ -13,12 +12,11 @@ import {
 
 export default function useProducts() {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [editingProduct, setEditingProduct] = useState(null);   
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [modalLoading, setModalLoading] = useState(false);
   const [error, setError] = useState('');
-  const [modalError, setModalError] = useState('');
   const router = useRouter();
 
   const fetchProducts = async () => {
@@ -31,19 +29,6 @@ export default function useProducts() {
       setError('Falha ao carregar os produtos.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchProductDetails = async (id) => {
-    setModalLoading(true);
-    setModalError('');
-    try {
-      const res = await getProductById(id);
-      setSelectedProduct(res.data);
-    } catch {
-      setModalError('Erro ao carregar detalhes do produto.');
-    } finally {
-      setModalLoading(false);
     }
   };
 
@@ -61,6 +46,7 @@ export default function useProducts() {
       await apiUpdateProduct(id, data);
       fetchProducts();
       setIsEditModalOpen(false);
+      setEditingProduct(null);
     } catch (error) {
       console.error('Erro ao editar produto:', error);
     }
@@ -71,7 +57,6 @@ export default function useProducts() {
     try {
       await deleteProductById(id);
       fetchProducts();
-      setSelectedProduct(null);
     } catch {
       alert('Erro ao deletar produto.');
     }
@@ -85,9 +70,6 @@ export default function useProducts() {
           p.id === id ? { ...p, bought: !p.bought } : p
         )
       );
-      if (selectedProduct?.id === id) {
-        setSelectedProduct(prev => ({ ...prev, bought: !prev.bought }));
-      }
     } catch {
       alert('Erro ao atualizar status de compra.');
     }
@@ -98,9 +80,7 @@ export default function useProducts() {
     router.push('/login');
   };
 
-  const soma = () => {
-    return products.reduce((acc, item) => acc + Number(item.price || 0), 0);
-  };
+  const soma = () => products.reduce((acc, item) => acc + Number(item.price || 0), 0);
 
   useEffect(() => {
     fetchProducts();
@@ -110,12 +90,12 @@ export default function useProducts() {
     products,
     loading,
     error,
-    modalLoading,
-    modalError,
-    selectedProduct,
     isEditModalOpen,
     setIsEditModalOpen,
-    fetchProductDetails,
+    editingProduct,
+    setEditingProduct,
+    isCreateModalOpen,      
+    setIsCreateModalOpen,
     createProduct,
     updateProduct,
     deleteProduct,

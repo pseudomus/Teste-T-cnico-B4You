@@ -9,7 +9,7 @@ export default function HeaderActions({ onNewClick, total, filter, onFilterChang
       <div className="flex items-center gap-4">
         <Button
           onClick={onNewClick}
-          className="bg-[#7F60FF] text-white text-lg px-6 py-3 rounded-full hover:bg-[#6b4de0]"
+          className="bg-[#7F60FF] text-white text-lg px-6 py-3 rounded-full hover:bg-[#6b4de0] cursor-pointer"
         >
           Novo Item
         </Button>

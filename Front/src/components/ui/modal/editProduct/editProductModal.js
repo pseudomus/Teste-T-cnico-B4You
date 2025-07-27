@@ -96,7 +96,7 @@ export default function EditProductModal({ isOpen, onClose, product, onSubmit })
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-[#7F60FF] hover:bg-[#6b4de0] text-white font-semibold py-2 px-8 rounded-full transition"
+              className="bg-[#7F60FF] hover:bg-[#6b4de0] text-white font-semibold py-2 px-8 rounded-full transition cursor-pointer"
             >
               Salvar
             </button>

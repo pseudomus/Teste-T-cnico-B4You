@@ -113,3 +113,18 @@ Permite controlar e organizar os itens, além de acompanhar o status de cada com
 -  Filtros na API para buscar produtos por status de compra.  
 -  Integração com banco de dados MySQL via Sequelize.  
 -  Migrations e seeders para inicialização do ambiente.
+
+-  ## 5. Possíveis Melhorias com Inteligência Artificial
+
+### **1. Recomendação de Produtos**
+- Utilizar algoritmos de Machine Learning** para sugerir produtos semelhantes ou complementares com base no histórico do usuário.  
+- Implementar modelos que analisem as preferências do usuário e façam recomendações personalizadas.
+
+### **2. Previsão de Preços**
+- Treinar um modelo que preveja variações de preços com base em dados históricos, ajudando o usuário a decidir o melhor momento para comprar.  
+- Integração com APIs de e-commerce para obter dados em tempo real.
+
+### **4. Detecção de Oportunidades**
+- Implementar uma IA que **monitore automaticamente promoções e alertas de desconto** em sites parceiros.  
+- Envio de notificações quando o preço de um produto desejado cair.
+

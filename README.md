@@ -36,7 +36,7 @@ DB_NAME=products_db
 DB_HOST=localhost
 JWT_SECRET=90c6736ed297d958c9e330c04fea8b107070b3fa5aa65a93149f7d286d0c91f12eaaae90cfb85452ad384be7be48a05d6217e53776d841a2e2f644fee35d3843
 ```
-Caso queira rodar no docker coloque 'db'como o DB_HOST do .env 
+Se for rodar no Docker, altere DB_HOST=localhost para DB_HOST=db.
 
 .env exemplo FrontEnd
 ```bash
@@ -50,7 +50,7 @@ Esse projeto pode ser executado em docker ou localmente por terminal
 
 ### 3.1 Docker
 
-Após copiar os .env execute o sequinte comando para subir o container docker
+Após copiar os .env execute o sequinte comando no diretório raiz para subir o container docker
 ```bash
 docker-compose up -d --build
 ```
@@ -90,3 +90,26 @@ Ao final teremos:
 - Frontend: http://localhost:3000
 - Backend: http://localhost:3001
 - MySQL: MySQL: localhost:3306 (usuário: root / senha: root)
+
+###  4. Funcionalidades do Projeto
+
+Este projeto é uma aplicação para gerenciamento de uma lista de produtos que o usuário deseja comprar no futuro.  
+Permite controlar e organizar os itens, além de acompanhar o status de cada compra.
+
+---
+
+###  **Frontend (Next.js)**
+-  Interface intuitiva para exibir e gerenciar a lista de produtos.  
+-  Filtros dinâmicos para exibir produtos de acordo com o **estado da compra** (pendente, comprado.).  
+-  Modal para criação e edição de produtos.  
+-  Consumo da API do backend.  
+-  Controle de sessão para usuários autenticados.
+
+---
+
+###  **Backend (Node.js + Express + Sequelize)**
+-  **CRUD de produtos** (criar, listar, atualizar, excluir).  
+-  **Sistema de login e autenticação** para proteger endpoints sensíveis.  
+-  Filtros na API para buscar produtos por status de compra.  
+-  Integração com banco de dados MySQL via Sequelize.  
+-  Migrations e seeders para inicialização do ambiente.

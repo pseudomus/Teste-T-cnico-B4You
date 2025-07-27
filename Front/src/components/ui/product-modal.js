@@ -17,7 +17,7 @@ export default function ProductModal({
 
   return (
     <div
-      className="fixed inset-0 z-60 flex items-center justify-center"
+      className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
       style={{ backgroundColor: 'rgba(233, 196, 255, 0.25)' }}
       onClick={onClose}
       aria-modal="true"
@@ -63,12 +63,6 @@ export default function ProductModal({
             </label>
 
             <div className="mt-6 flex justify-end gap-4">
-              <Link
-                href={`/products/${product.id}/edit`}
-                className=" px-4 py-4 cursor-pointer"
-              >
-                <Image src="/editButton.svg" alt="Ver" width={18} height={18} />
-              </Link>
               <button
                 onClick={() => {
                   onDelete(product.id);

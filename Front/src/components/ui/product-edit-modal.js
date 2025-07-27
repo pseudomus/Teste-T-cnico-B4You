@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import TextBox from "@/components/textbox";
 
 const CATEGORIES = [
   "Eletrônicos",
@@ -49,84 +50,87 @@ export default function EditProductModal({ isOpen, onClose, product, onSubmit })
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(233,196,255,0.25)] backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg transition-transform transform scale-100 animate-fadeIn"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
-          className="absolute top-2 right-3 text-gray-500 text-xl"
+          className="absolute top-2 right-4 text-gray-400 text-2xl hover:text-gray-600 cursor-pointer"
           onClick={onClose}
         >
-          ×
+          &times;
         </button>
 
         <h2 className="text-2xl font-bold mb-4">Editar Produto</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Nome */}
-          <div>
-            <label className="block font-semibold mb-1">Nome</label>
-            <input
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border rounded-md px-3 py-2"
-              required
-            />
+
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <label className="block mb-1 font-semibold">Nome</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border border-[#7F60FF] rounded-md px-3 py-2"
+                required
+              />
+            </div>
+            <div className="flex-1">
+              <label className="block mb-1 font-semibold">Preço &quot;R$&quot;</label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                className="w-full border border-[#7F60FF] rounded-md px-3 py-2"
+                required
+              />
+            </div>
           </div>
 
-          {/* Preço */}
-          <div>
-            <label className="block font-semibold mb-1">Preço</label>
-            <input
-              name="price"
-              type="number"
-              value={formData.price}
-              onChange={handleChange}
-              className="w-full border rounded-md px-3 py-2"
-              required
-            />
-          </div>
-
-          {/* Descrição */}
-          <div>
-            <label className="block font-semibold mb-1">Descrição</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full border rounded-md px-3 py-2"
-              rows={3}
-              required
-            />
-          </div>
-
-          {/* Categoria */}
-          <div>
-            <label className="block font-semibold mb-1">Categoria</label>
+          <div className="flex gap-4">
+            <div className="flex-1">
+            <label className="block mb-1 font-semibold">Categoria</label>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border border-[#7F60FF] rounded-md px-3 py-2"
               required
             >
-              <option value="" disabled>
-                Selecione uma categoria
-              </option>
+            <option value="" disabled>Selecione uma categoria</option>
               {CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
+            <option key={cat} value={cat}>{cat}</option>
+               ))}
             </select>
+            </div>
+          <div className="flex-1" />
+        </div>
+        
+          <div>
+            <TextBox
+            label="Descrição"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            />
           </div>
 
-          {/* Botão de salvar */}
-          <button
+          <div className="flex justify-end">
+          <button 
             type="submit"
-            className="bg-[#7F60FF] text-white px-4 py-2 rounded-md font-semibold hover:bg-[#6f50e0]"
+            className="bg-[#7F60FF] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#6f50e0]"
           >
             Salvar
           </button>
+          </div>
         </form>
       </div>
     </div>

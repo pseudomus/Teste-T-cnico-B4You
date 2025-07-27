@@ -128,7 +128,7 @@ export default function ProductsPage() {
       <div className="mt-[100px] max-w-5xl mx-auto px-4 pt-5 flex justify-between items-center">
         <button
           onClick={console.log('teste')}
-          className="inline-block bg-[#7F60FF] text-white text-xl px-4 py-3 rounded-full max-w-max font-semibold cursor-pointer"
+          className="inline-block bg-[#7F60FF] text-white text-xl px-4 py-3 rounded-full max-w-max font-semibold cursor-pointer hover:bg-[#6f50e0]"
         >
           Novo item
         </button>

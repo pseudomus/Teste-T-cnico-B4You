@@ -7,13 +7,13 @@ const {
     validateUpdateProduct
 } = require('../middlewares/validateProducts');
 
+router.get('/bought/only', auth, productsController.getBought);
+router.get('/bought/pending', auth, productsController.getUnbought);
 router.get('/getAll', auth, productsController.getAllProducts);
 router.get('/:id', auth, productsController.getProductById);
 router.post('/', auth, validateCreateProduct, productsController.createProduct);
 router.put('/:id', auth, validateUpdateProduct, productsController.updateProduct);
 router.delete('/:id', auth, productsController.deleteProduct);
 router.patch('/:id/bought', auth, productsController.toggleBoughtStatus);
-router.get('/bought/only', auth, productsController.getBought);
-router.get('/bought/pending', auth, productsController.getUnbought);
 
 module.exports = router;

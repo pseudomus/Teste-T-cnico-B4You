@@ -37,8 +37,8 @@ export default function ProductCard({ id, name, price, category, description, bo
       </CardContent>
 
       <div className="flex items-center space-x-2 mt-3">
-        <Checkbox checked={bought} onCheckedChange={() => toggleBought(id)} />
-        <span className="text-sm cursor-pointer">{bought ? "Comprado" : "Pendente"}</span>
+        <Checkbox className="cursor-pointer" checked={bought} onCheckedChange={() => toggleBought(id)} />
+        <span className="text-sm">{bought ? "Comprado" : "Pendente"}</span>
       </div>
     </Card>
   );

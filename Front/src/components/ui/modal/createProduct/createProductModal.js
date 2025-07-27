@@ -32,7 +32,6 @@ export default function CreateProductModal({ isOpen, onClose, onSubmit }) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-5 mt-4">
-          {/* Nome e Preço */}
           <div className="flex gap-4">
             <div className="flex-1">
               <label className="block mb-1 font-semibold">Nome</label>
@@ -59,7 +58,6 @@ export default function CreateProductModal({ isOpen, onClose, onSubmit }) {
             </div>
           </div>
 
-          {/* Categoria */}
           <div>
             <label className="block mb-1 font-semibold">Categoria</label>
             <Select value={formData.category} onValueChange={handleCategoryChange}>
@@ -76,7 +74,6 @@ export default function CreateProductModal({ isOpen, onClose, onSubmit }) {
             </Select>
           </div>
 
-          {/* Descrição */}
           <div>
             <label className="block mb-1 font-semibold">Descrição</label>
             <Textarea
@@ -93,7 +90,6 @@ export default function CreateProductModal({ isOpen, onClose, onSubmit }) {
             </p>
           </div>
 
-          {/* Botão */}
           <div className="flex justify-end">
             <button
               type="submit"

@@ -5,7 +5,6 @@ import ProductList from '../components/ProductList';
 import HeaderActions from '../components/HeaderActions';
 import EditProductModal from '@/components/ui/modal/editProduct/editProductModal';
 import CreateProductModal from '@/components/ui/modal/createProduct/createProductModal'
-import { useState } from 'react';
 
 export default function DashboardPage() {
     const {

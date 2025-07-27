@@ -19,6 +19,16 @@ export default function useProducts() {
   const [error, setError] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+    fetchProducts();
+  }, []);
+  
+
   const fetchProducts = async () => {
     try {
       setLoading(true);

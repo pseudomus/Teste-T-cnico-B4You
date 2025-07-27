@@ -114,7 +114,7 @@ Permite controlar e organizar os itens, além de acompanhar o status de cada com
 -  Integração com banco de dados MySQL via Sequelize.  
 -  Migrations e seeders para inicialização do ambiente.
 
--  ## 5. Possíveis Melhorias com Inteligência Artificial
+## 5. Possíveis Melhorias com Inteligência Artificial
 
 ### **1. Recomendação de Produtos**
 - Utilizar algoritmos de Machine Learning** para sugerir produtos semelhantes ou complementares com base no histórico do usuário.  

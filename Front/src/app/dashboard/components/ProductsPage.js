@@ -8,7 +8,9 @@ import CreateProductModal from '@/components/ui/modal/createProduct/createProduc
 
 export default function DashboardPage() {
     const {
-        products,
+        products,        
+        filter,
+        changeFilter,   
         loading,
         error,
         logout,
@@ -22,7 +24,7 @@ export default function DashboardPage() {
         updateProduct,
         createProduct,
         isCreateModalOpen,
-        setIsCreateModalOpen
+        setIsCreateModalOpen, 
     } = useProducts();
 
 
@@ -30,7 +32,11 @@ export default function DashboardPage() {
     return (
         <>
             <FloatingNav onLogout={logout} />
-            <HeaderActions onNewClick={() => setIsCreateModalOpen(true)} total={soma()} />
+            <HeaderActions onNewClick={() => setIsCreateModalOpen(true)} 
+            total={soma()} 
+            filter={filter}                 
+            onFilterChange={changeFilter}  
+            />
 
             <main className="pt-8 px-6 max-w-6xl mx-auto">
                 {loading ? (

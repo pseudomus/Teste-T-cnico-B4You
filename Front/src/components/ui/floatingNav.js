@@ -9,7 +9,7 @@ export function FloatingNav({ onLogout }) {
         <span className="text-3xl font-bold text-[#7F60FF]">My List</span>
         <Button
           onClick={onLogout}
-          className="ml-auto bg-[#7F60FF] hover:bg-[#6b4de0] text-white rounded-full px-6 py-2 text-lg"
+          className="ml-auto bg-[#7F60FF] hover:bg-[#6b4de0] text-white rounded-full px-6 py-2 text-lg cursor-pointer"
         >
           Sair
         </Button>

@@ -1,38 +1,34 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  getAllProducts,
+  getUnboughtProducts,
   createProduct as apiCreateProduct,
   updateProduct as apiUpdateProduct,
   deleteProductById,
   toggleProductBought,
+  getAllProducts,
+  getBoughtProducts,
 } from '../services/productSevice';
 
 export default function useProducts() {
   const [products, setProducts] = useState([]);
-  const [editingProduct, setEditingProduct] = useState(null);   
+  const [filter, setFilter] = useState('all');
+  const [editingProduct, setEditingProduct] = useState(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-      return;
-    }
-    fetchProducts();
-  }, []);
-  
-
-  const fetchProducts = async () => {
+  const fetchProducts = async (selectedFilter = filter) => {
     try {
       setLoading(true);
-      const res = await getAllProducts();
+      let res;
+      if (selectedFilter === 'bought') res = await getBoughtProducts();
+      else if (selectedFilter === 'unbought') res = await getUnboughtProducts();
+      else res = await getAllProducts();
+
       setProducts(res.data);
       setError('');
     } catch {
@@ -42,47 +38,42 @@ export default function useProducts() {
     }
   };
 
-  const createProduct = async (data) => {
-    try {
-      await apiCreateProduct(data);
-      fetchProducts();
-    } catch (error) {
-      console.error('Erro ao criar produto:', error);
+  const changeFilter = (value) => {
+    if (!value || value === filter) return;
+    setFilter(value);
+    fetchProducts(value);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
     }
+    fetchProducts();
+  }, [router]);
+
+  const createProduct = async (data) => {
+    await apiCreateProduct(data);
+    fetchProducts(filter); 
   };
 
   const updateProduct = async (id, data) => {
-    try {
-      await apiUpdateProduct(id, data);
-      fetchProducts();
-      setIsEditModalOpen(false);
-      setEditingProduct(null);
-    } catch (error) {
-      console.error('Erro ao editar produto:', error);
-    }
+    await apiUpdateProduct(id, data);
+    fetchProducts(filter);
+    setIsEditModalOpen(false);
+    setEditingProduct(null);
   };
 
   const deleteProduct = async (id) => {
     if (!confirm('Tem certeza que deseja deletar este produto?')) return;
-    try {
-      await deleteProductById(id);
-      fetchProducts();
-    } catch {
-      alert('Erro ao deletar produto.');
-    }
+    await deleteProductById(id);
+    fetchProducts(filter);
   };
 
   const toggleBought = async (id) => {
-    try {
-      await toggleProductBought(id);
-      setProducts(prev =>
-        prev.map(p =>
-          p.id === id ? { ...p, bought: !p.bought } : p
-        )
-      );
-    } catch {
-      alert('Erro ao atualizar status de compra.');
-    }
+    await toggleProductBought(id);
+    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, bought: !p.bought } : p)));
   };
 
   const logout = () => {
@@ -92,19 +83,17 @@ export default function useProducts() {
 
   const soma = () => products.reduce((acc, item) => acc + Number(item.price || 0), 0);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   return {
     products,
+    filter,
+    changeFilter,
     loading,
     error,
     isEditModalOpen,
     setIsEditModalOpen,
     editingProduct,
     setEditingProduct,
-    isCreateModalOpen,      
+    isCreateModalOpen,
     setIsCreateModalOpen,
     createProduct,
     updateProduct,

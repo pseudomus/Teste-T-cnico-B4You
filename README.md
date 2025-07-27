@@ -24,7 +24,7 @@ git clone https://github.com/seu-usuario/teste-b4you.git
 cd teste-b4you
 ```
 
-###  2.2 Criar os .env
+###  2.2 Arquivos .env
 
 .env exemplo backend
 ```bash
@@ -44,3 +44,49 @@ Caso queira rodar no docker coloque 'db'como o DB_HOST do .env
 PORT=3001
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
+
+### 3. Formas de executar o projeto
+Esse projeto pode ser executado em docker ou localmente por terminal
+
+### 3.1 Docker
+
+Após copiar os .env execute o sequinte comando para subir o container docker
+```bash
+docker-compose up -d --build
+```
+Em seguida vamos rodar as migrations e os seeders
+```bash
+docker exec -it backend-container npx sequelize-cli db:migrate
+docker exec -it backend-container npx sequelize-cli db:seed:all
+```
+Ao final teremos:
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+- MySQL: disponível em localhost:3306
+
+Certifique-se que as respectivas portas estejam liberadas para uso
+
+### 3.2 Local
+
+Após copiar os .env execute os sequintes comandos no diretorio raiz
+```bash
+cd api
+npm install
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+npm run dev
+```
+Esses comandos vão baixar as dependencias e iniciar o backend
+
+Agora abra outro terminal e rode no repositorio raiz
+```bash
+cd Front
+npm install
+npm run dev
+```
+Ao final teremos: 
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+- MySQL: MySQL: localhost:3306 (usuário: root / senha: root)

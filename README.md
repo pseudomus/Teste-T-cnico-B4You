@@ -4,7 +4,9 @@ Este projeto é uma aplicação fullstack composta por:
 - **Frontend**: Next.js  
 - **Backend**: Node.js com Express e Sequelize  
 - **Banco de Dados**: MySQL  
-- **Orquestração**: Docker e Docker Compose  
+- **Orquestração**: Docker e Docker Compose
+- **Design: Design de interface no figma pode ser acessado por esse [link](https://www.figma.com/design/hjxbc9I2IUQ5ymx7CUzesX/Untitled?node-id=1-2&t=vA2zZMoyWm8VPVla-1)
+
 
 ---
 

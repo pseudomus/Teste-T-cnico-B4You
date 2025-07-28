@@ -68,7 +68,7 @@ Ao final teremos:
 Certifique-se que as respectivas portas estejam liberadas para uso
 
 ### 3.2 Local
-###Lembre-se de alterar o .env da API para DB_HOST=localhost caso esteja DB_HOST=db e de também fechar qualquer container docker caso tenha aberto algum que ocupe as portas necessárias
+### Lembre-se de alterar o .env da API para DB_HOST=localhost caso esteja DB_HOST=db e de também fechar qualquer container docker caso tenha aberto algum que ocupe as portas necessárias
 Após copiar os .env execute os sequintes comandos no diretorio raiz
 ```bash
 cd API

@@ -69,7 +69,7 @@ Certifique-se que as respectivas portas estejam liberadas para uso
 
 ### 3.2 Local
 ### Lembre-se de alterar o .env da API para DB_HOST=localhost caso esteja DB_HOST=db e de também fechar qualquer container docker caso tenha aberto algum que ocupe as portas necessárias
-Após copiar os .env execute os sequintes comandos no diretorio raiz
+Após copiar os .env execute os sequintes comandos no diretório raiz
 ```bash
 cd API
 npm install
@@ -79,7 +79,7 @@ npm run dev
 ```
 Esses comandos vão baixar as dependencias e iniciar o backend
 
-Agora abra outro terminal e rode no repositorio raiz
+Agora abra outro terminal e rode no diretório raiz
 ```bash
 cd Front
 npm install

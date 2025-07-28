@@ -71,7 +71,7 @@ Certifique-se que as respectivas portas estejam liberadas para uso
 
 Após copiar os .env execute os sequintes comandos no diretorio raiz
 ```bash
-cd api
+cd API
 npm install
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all

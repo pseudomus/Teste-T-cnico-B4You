@@ -51,7 +51,7 @@ Esse projeto pode ser executado em docker ou localmente por terminal
 
 ### 3.1 Docker
 
-Após copiar os .env execute o sequinte comando no diretório raiz para subir o container docker
+Após copiar os arquivos .env em seus diretórios(backend: ./API e frontend: ./Front)execute o sequinte comando no diretório raiz para subir o container docker
 ```bash
 docker-compose up -d --build
 ```

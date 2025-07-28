@@ -21,7 +21,6 @@ Este projeto é uma aplicação fullstack composta por:
 ###  2.1. Clone o repositório
 ```bash
 git clone https://github.com/pseudomus/teste-b4you.git
-cd teste-b4you
 ```
 
 ###  2.2 Arquivos .env

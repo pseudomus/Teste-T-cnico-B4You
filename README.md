@@ -45,6 +45,7 @@ Se for rodar no Docker, altere DB_HOST=localhost para DB_HOST=db.
 PORT=3001
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
+Se for rodar no Docker, altere NEXT_PUBLIC_API_URL=http://localhost:3001 para NEXT_PUBLIC_API_URL=/
 
 ### 3. Formas de executar o projeto
 Esse projeto pode ser executado em docker ou localmente por terminal
@@ -70,7 +71,7 @@ Ao final teremos:
 Certifique-se que as respectivas portas estejam liberadas para uso
 
 ### 3.2 Local
-### Lembre-se de alterar o .env da API para DB_HOST=localhost caso esteja DB_HOST=db e de também fechar qualquer container docker caso tenha aberto algum que ocupe as portas necessárias
+### Lembre-se de alterar o .env da API para DB_HOST=localhost caso esteja DB_HOST=db, de colocar no .env do frontend NEXT_PUBLIC_API_URL=http://localhost:3001 se estiver NEXT_PUBLIC_API_URL=/ e de também fechar qualquer container docker caso tenha aberto algum que ocupe as portas necessárias
 Após copiar os .env execute os sequintes comandos no diretório raiz
 ```bash
 cd API

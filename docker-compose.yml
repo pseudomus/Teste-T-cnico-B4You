@@ -14,12 +14,12 @@ services:
       - /var/lib/mysql
 
   backend:
-    build: ./api
+    build: ./API
     container_name: backend-container
     ports:
       - "3001:3001"
     env_file:
-      - ./api/.env
+      - ./API/.env
     depends_on:
       - db
 

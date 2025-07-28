@@ -22,7 +22,7 @@ Este projeto é uma aplicação fullstack composta por:
 
 ###  2.1. Clone o repositório
 ```bash
-git clone https://github.com/pseudomus/teste-b4you.git
+git clone https://github.com/pseudomus/Teste-Tecnico-B4You.git
 ```
 
 ###  2.2 Arquivos .env
@@ -51,7 +51,7 @@ Esse projeto pode ser executado em docker ou localmente por terminal
 
 ### 3.1 Docker
 
-Após copiar os .env execute o sequinte comando no diretório raiz para subir o container docker
+Após copiar os arquivos .env em seus diretórios(backend: ./API e frontend: ./Front)execute o sequinte comando no diretório raiz para subir o container docker
 ```bash
 docker-compose up -d --build
 ```
@@ -60,6 +60,7 @@ Em seguida vamos rodar as migrations e os seeders
 docker exec -it backend-container npx sequelize-cli db:migrate
 docker exec -it backend-container npx sequelize-cli db:seed:all
 ```
+Nesse momento você terá que aceitar o dowload da sequelize-cli no terminal.
 Ao final teremos:
 
 - Frontend: http://localhost:3000

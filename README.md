@@ -60,6 +60,7 @@ Em seguida vamos rodar as migrations e os seeders
 docker exec -it backend-container npx sequelize-cli db:migrate
 docker exec -it backend-container npx sequelize-cli db:seed:all
 ```
+Nesse momento você terá que aceitar o dowload da sequelize-cli no terminal
 Ao final teremos:
 
 - Frontend: http://localhost:3000
